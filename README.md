@@ -30,7 +30,7 @@ where a small amount of random noise is added to simulate real-world observation
 
 The univariate linear regression model is:
 
-\[y = mx + b\]
+y = mx + b
 
 where:
 
@@ -43,43 +43,13 @@ where:
 
 Mean Squared Error (MSE) is used as the loss function:
 
-\[L = \frac{1}{n}\sum_{i=1}^{n}(y_i - (mx_i+b))^2\]
-
+<img width="165" height="38" alt="Screenshot 2026-05-24 at 10 35 03 PM" src="https://github.com/user-attachments/assets/4e3a6de4-c96d-47f7-873e-c1072cb6911e" />
 The objective of training is to find values of **m** and **b** that minimize this loss.
 
 ---
 
 ## Gradient Descent
-
-The gradients of the loss function are:
-
-\[
-\frac{\partial L}{\partial m}
-=
--\frac{2}{n}
-\sum_{i=1}^{n}
-x_i(y_i-(mx_i+b))
-\]
-
-\[
-\frac{\partial L}{\partial b}
-=
--\frac{2}{n}
-\sum_{i=1}^{n}
-(y_i-(mx_i+b))
-\]
-
-The parameters are updated using:
-
-\[
-m_{new}=m_{old}-\alpha\frac{\partial L}{\partial m}
-\]
-
-\[
-b_{new}=b_{old}-\alpha\frac{\partial L}{\partial b}
-\]
-
-where **α** is the learning rate.
+<img width="298" height="221" alt="Screenshot 2026-05-24 at 10 35 48 PM" src="https://github.com/user-attachments/assets/d861f89c-4d40-43d4-8372-1710def6530c" />
 
 ---
 
