@@ -287,43 +287,15 @@ The objective of this task is to build a Multivariate Linear Regression model us
 
 The dataset contains information about California housing block groups collected during the 1990 Census.
 
-Each record represents a **census block group**, not an individual house.
+## Model Summary
 
-#### Features Available
+### Dataset
 
-- longitude
-- latitude
-- housing_median_age
-- total_rooms
-- total_bedrooms
-- population
-- households
-- median_income
+- Total Samples: 17,000
+- Training Samples: 13,600 (80%)
+- Testing Samples: 3,400 (20%)
 
-#### Target Variable
-
-- median_house_value
-
-#### Important Note
-
-The dataset does **not** represent individual houses.
-
-Each row represents a geographical block group containing multiple households.
-
-Therefore, the model predicts the **median house value of a block group**, not the value of a single house.
-
----
-
-## Data Preprocessing
-
-#### Feature Selection
-
-As specified in the problem statement, the following columns were excluded:
-
-- longitude
-- latitude
-
-The remaining features were used as input variables:
+### Features Used
 
 - housing_median_age
 - total_rooms
@@ -332,44 +304,31 @@ The remaining features were used as input variables:
 - households
 - median_income
 
-#### Train-Test Split
+Excluded Features:
 
-The dataset was divided into:
+- longitude
+- latitude
 
-- Training Set: 80%
-- Testing Set: 20%
+### Model
 
-This allows the model to be trained on one portion of the data and evaluated on previously unseen data.
+Multivariate Linear Regression:
 
-Training Samples = 13,600
-
-Testing Samples = 3,400
-
----
-
-## Multivariate Linear Regression
-
-Unlike univariate regression, which uses a single feature, multivariate regression uses multiple input features.
-
-The model can be represented as:
-
-\[
-y = w_1x_1 + w_2x_2 + w_3x_3 + w_4x_4 + w_5x_5 + w_6x_6 + b
-\]
+```text
+y = w1x1 + w2x2 + w3x3 + w4x4 + w5x5 + w6x6 + b
+```
 
 where:
 
-- \(y\) = predicted median house value
-- \(x_i\) = feature values
-- \(w_i\) = learned coefficients
-- \(b\) = intercept
+- y = predicted median house value
+- wi = learned coefficient
+- b = intercept
 
 ---
 
-## Learned Model Parameters
+## Learned Parameters
 
 | Feature | Coefficient |
-|----------|-------------:|
+|----------|-----------:|
 | housing_median_age | 1849.79 |
 | total_rooms | -20.65 |
 | total_bedrooms | 95.97 |
@@ -377,359 +336,108 @@ where:
 | households | 128.47 |
 | median_income | 47705.63 |
 
-#### Intercept
-
-\[
-b = -46224.84
-\]
-
-The intercept represents the predicted value when all feature values are zero.
-
-Since a block group with all features equal to zero is not realistic, the intercept is not interpreted physically and primarily acts as a constant offset that helps the model fit the data.
+**Intercept:** -46,224.84
 
 ---
 
-## Model Evaluation
+## Regression Results
 
-### Regression Metrics
+| Metric | Value |
+|----------|----------:|
+| MAE | 55,065.78 |
+| MSE | 5,558,804,420.35 |
+| RMSE | 74,557.39 |
+| R² Score | 0.5966 |
 
-Since house price prediction is a regression problem, the following regression metrics were used.
+### Formulas
 
----
+```text
+MAE  = (1/n) Σ|yi - ŷi|
 
-### Mean Absolute Error (MAE)
+MSE  = (1/n) Σ(yi - ŷi)²
 
-#### Formula
+RMSE = √MSE
 
-\[
-MAE = \frac{1}{n}\sum_{i=1}^{n}|y_i - \hat y_i|
-\]
+R² = 1 - (SSresidual / SStotal)
 
-#### Meaning
+SSresidual = Σ(yi - ŷi)²
 
-Measures the average absolute prediction error.
+SStotal = Σ(yi - ȳ)²
+```
 
-#### Result
+### Observations
 
-\[
-MAE = 55065.78
-\]
-
-Interpretation:
-
-On average, predictions differ from actual house values by approximately \$55,066.
-
----
-
-### Mean Squared Error (MSE)
-
-#### Formula
-
-\[
-MSE = \frac{1}{n}\sum_{i=1}^{n}(y_i - \hat y_i)^2
-\]
-
-#### Meaning
-
-Measures the average squared prediction error.
-
-Large errors are penalized more heavily because errors are squared.
-
-#### Result
-
-\[
-MSE = 5,558,804,420.35
-\]
+- Average prediction error ≈ $55,066 (MAE)
+- Typical prediction error ≈ $74,557 (RMSE)
+- Model explains 59.66% of variation in house values (R²)
+- Median Income is the most influential feature
 
 ---
 
-### Root Mean Squared Error (RMSE)
+## Classification Results
 
-#### Formula
+To satisfy the assignment requirements, house prices were converted into two classes:
 
-\[
-RMSE = \sqrt{MSE}
-\]
+```text
+Price > Median(y_test)  → High Price (1)
 
-#### Meaning
+Price ≤ Median(y_test)  → Low Price (0)
+```
 
-Represents prediction error in the same units as house prices.
+The median was used because it creates relatively balanced classes and is less affected by outliers.
 
-#### Result
+### Results
 
-\[
-RMSE = 74,557.39
-\]
+| Metric | Value |
+|----------|----------:|
+| Accuracy | 0.7912 |
+| Precision | 0.7559 |
+| Recall | 0.8600 |
+| F1 Score | 0.8046 |
 
-Interpretation:
+### Formulas
 
-Typical prediction error is approximately \$74,557.
+```text
+Accuracy  = (TP + TN)/(TP + TN + FP + FN)
 
----
+Precision = TP/(TP + FP)
 
-### R² Score
+Recall    = TP/(TP + FN)
 
-#### Formula
+F1 Score  = 2 × Precision × Recall /
+            (Precision + Recall)
+```
 
-\[
-R^2 = 1 - \frac{SS_{residual}}{SS_{total}}
-\]
+### Confusion Matrix
 
-where
+```text
+[[1228  472]
+ [ 238 1462]]
+```
 
-\[
-SS_{residual} = \sum_{i=1}^{n}(y_i - \hat y_i)^2
-\]
+### Observations
 
-and
-
-\[
-SS_{total} = \sum_{i=1}^{n}(y_i - \bar y)^2
-\]
-
-#### Meaning
-
-R² measures how much of the variation in house prices is explained by the model.
-
-#### Result
-
-\[
-R^2 = 0.5966
-\]
-
-Interpretation:
-
-The model explains approximately **59.66%** of the variation in median house values.
+- Classification Accuracy ≈ 79%
+- Recall (86%) > Precision (75.6%)
+- Model identifies high-value areas reasonably well
+- More false positives (472) than false negatives (238)
 
 ---
 
-#3 Classification Metrics
+## Predictions
 
-### Why Were Classification Metrics Used?
+| Data Point | Predicted House Value |
+|------------|---------------------:|
+| 1 | $426,695.76 |
+| 2 | $224,966.17 |
 
-The assignment explicitly required:
+### Observation
 
-- Accuracy
-- Precision
-- Recall
-- F1 Score
-- Confusion Matrix
-
-However, these metrics are normally used for classification problems rather than regression problems.
-
-To satisfy the assignment requirements, house prices were converted into two classes.
-
----
-
-## Conversion from Regression to Classification
-
-The median house value of the test set was used as a threshold.
-
-#### Rule
-
-If:
-
-\[
-Price > Median(y_{test})
-\]
-
-Class = 1 (High Price)
-
-Otherwise:
-
-Class = 0 (Low Price)
-
-#### Why Median?
-
-The median generally divides the dataset into two nearly equal groups and is less affected by extreme values than the mean.
-
----
-
-## Confusion Matrix
-
-| | Predicted Low | Predicted High |
-|----|----|----|
-| Actual Low | 1228 | 472 |
-| Actual High | 238 | 1462 |
-
-Definitions:
-
-- TP = True Positive
-- TN = True Negative
-- FP = False Positive
-- FN = False Negative
-
----
-
-### Accuracy
-
-#### Formula
-
-\[
-Accuracy =
-\frac{TP + TN}
-{TP + TN + FP + FN}
-\]
-
-#### Result
-
-\[
-Accuracy = 0.7912
-\]
-
-Interpretation:
-
-Approximately 79.12% of houses were correctly classified.
-
----
-
-##3 Precision
-
-#### Formula
-
-\[
-Precision =
-\frac{TP}
-{TP + FP}
-\]
-
-#### Result
-
-\[
-Precision = 0.7559
-\]
-
-Interpretation:
-
-Among all houses predicted as high-value, approximately 75.59% were actually high-value.
-
----
-
-### Recall
-
-#### Formula
-
-\[
-Recall =
-\frac{TP}
-{TP + FN}
-\]
-
-#### Result
-
-\[
-Recall = 0.8600
-\]
-
-Interpretation:
-
-The model correctly identified approximately 86% of actual high-value houses.
-
----
-
-### F1 Score
-
-#### Formula
-
-\[
-F1 =
-\frac{2 \times Precision \times Recall}
-{Precision + Recall}
-\]
-
-#### Result
-
-\[
-F1 = 0.8046
-\]
-
-Interpretation:
-
-The model achieves a good balance between Precision and Recall.
-
----
-
-## Scatter Plot Analysis
-
-A scatter plot was created using:
-
-- X-axis: Actual House Prices
-- Y-axis: Predicted House Prices
-
-A reference line:
-
-\[
-y = x
-\]
-
-was added.
-
-#### Interpretation
-
-- Points close to the line indicate accurate predictions.
-- Points far from the line indicate larger prediction errors.
-- A tighter clustering around the line suggests better model performance.
-
----
-
-## Predictions for New Data Points
-
-### Data Point 1
-
-| Feature | Value |
-|----------|--------:|
-| housing_median_age | 41 |
-| total_rooms | 880 |
-| total_bedrooms | 129 |
-| population | 322 |
-| households | 126 |
-| median_income | 8.3252 |
-
-#### Predicted Price
-
-\[
-\$426,695.76
-\]
-
----
-
-### Data Point 2
-
-| Feature | Value |
-|----------|--------:|
-| housing_median_age | 28 |
-| total_rooms | 960 |
-| total_bedrooms | 160 |
-| population | 310 |
-| households | 150 |
-| median_income | 4.5001 |
-
-#### Predicted Price
-
-\[
-\$224,966.17
-\]
-
----
-
-## Observations
-
-1. Median Income has the largest coefficient and appears to be the most influential feature.
-
-2. Housing Median Age also contributes positively to house value.
-
-3. The model achieved an R² score of 0.5966, indicating moderate predictive capability.
-
-4. The model correctly classified approximately 79% of block groups into high-value and low-value categories.
-
-5. The higher median income of Data Point 1 resulted in a significantly larger predicted house value compared to Data Point 2.
-
-6. Since the dataset represents census block groups rather than individual houses, predictions correspond to the median house value of an area rather than the value of a single house.
+Data Point 1 received a significantly higher prediction primarily due to its higher median income.
 
 ---
 
 ## Conclusion
 
-A Multivariate Linear Regression model was successfully trained on the California Housing dataset using six selected features. The model demonstrated moderate predictive performance with an R² score of 0.5966 and produced reasonable house value estimates for unseen data. Both regression and classification-based evaluation metrics were analyzed, and the results indicate that median income is the strongest predictor of median house value within the selected feature set.
-
+The model achieved moderate predictive performance with an R² score of 0.5966. Median Income emerged as the strongest predictor of house value, and the model produced reasonable predictions on unseen data.
 
