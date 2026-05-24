@@ -269,3 +269,9 @@ This configuration was chosen because:
 4. It produces results that closely match Scikit-Learn's `LinearRegression` model.
 
 Among the tested learning rates, **α = 0.5** was selected as the best learning rate because it achieved essentially the same optimum as the smaller learning rates while converging in the fewest iterations.
+
+# Plots Generated (Final Configuration)
+<img width="743" height="471" alt="Screenshot 2026-05-24 at 10 52 40 PM" src="https://github.com/user-attachments/assets/0ddf318b-a7aa-42d6-8fc7-bfe2b81f5377" />
+<img width="739" height="473" alt="Screenshot 2026-05-24 at 10 52 35 PM" src="https://github.com/user-attachments/assets/f758101c-c80e-472f-bf60-2301929ef609" />
+
+
