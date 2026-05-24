@@ -30,9 +30,7 @@ where a small amount of random noise is added to simulate real-world observation
 
 The univariate linear regression model is:
 
-\[
-y = mx + b
-\]
+\[y = mx + b\]
 
 where:
 
@@ -45,9 +43,7 @@ where:
 
 Mean Squared Error (MSE) is used as the loss function:
 
-\[
-L = \frac{1}{n}\sum_{i=1}^{n}(y_i - (mx_i+b))^2
-\]
+\[L = \frac{1}{n}\sum_{i=1}^{n}(y_i - (mx_i+b))^2\]
 
 The objective of training is to find values of **m** and **b** that minimize this loss.
 
