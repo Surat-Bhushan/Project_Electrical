@@ -441,3 +441,7 @@ Data Point 1 received a significantly higher prediction primarily due to its hig
 
 The model achieved moderate predictive performance with an R² score of 0.5966. Median Income emerged as the strongest predictor of house value, and the model produced reasonable predictions on unseen data.
 
+## Scatter plot comparing actual vs. predicted house prices for the test set
+
+<img width="770" height="564" alt="Screenshot 2026-05-25 at 1 06 16 AM" src="https://github.com/user-attachments/assets/26409ee7-9d2b-49e7-8956-73ecbda38b7b" />
+
