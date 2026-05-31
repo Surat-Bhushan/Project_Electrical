@@ -483,9 +483,9 @@ Logistic Regression is a supervised machine learning algorithm used for binary c
 The following visualizations were generated:
 
 - Confusion Matrix Heatmaps for all three models
-  <img width="494" height="388" alt="Screenshot 2026-06-01 at 1 41 16 AM" src="https://github.com/user-attachments/assets/d737e629-fae2-43e3-8632-4a8f992cb58c" />
-  <img width="477" height="389" alt="Screenshot 2026-06-01 at 1 41 31 AM" src="https://github.com/user-attachments/assets/301930cb-34c5-4fe5-a682-57e112e4f4a4" />
-<img width="487" height="395" alt="Screenshot 2026-06-01 at 1 41 24 AM" src="https://github.com/user-attachments/assets/bf6adea8-07d3-47af-bf40-387b285cfc84" />
+- <img width="494" height="388" alt="Screenshot 2026-06-01 at 1 41 16 AM" src="https://github.com/user-attachments/assets/d737e629-fae2-43e3-8632-4a8f992cb58c" />
+- <img width="477" height="389" alt="Screenshot 2026-06-01 at 1 41 31 AM" src="https://github.com/user-attachments/assets/301930cb-34c5-4fe5-a682-57e112e4f4a4" />
+- <img width="487" height="395" alt="Screenshot 2026-06-01 at 1 41 24 AM" src="https://github.com/user-attachments/assets/bf6adea8-07d3-47af-bf40-387b285cfc84" />
 
 - 2D Decision Boundary using Age and Fare
 - <img width="742" height="573" alt="Screenshot 2026-06-01 at 1 41 41 AM" src="https://github.com/user-attachments/assets/7f205b04-7fb1-481e-a434-0158d62bcec6" />
