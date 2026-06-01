@@ -542,7 +542,7 @@ The goal is to understand how different classification algorithms learn patterns
 
 ---
 
-# Naive Bayes Classifier
+## Naive Bayes Classifier
 
 ## What is Naive Bayes?
 
@@ -600,7 +600,7 @@ The algorithm assumes that all features are conditionally independent given the 
 
 ---
 
-# Decision Tree Classifier
+## Decision Tree Classifier
 
 ## What is a Decision Tree?
 
@@ -663,7 +663,7 @@ After selecting the best root node, the same process is repeated on each subset 
 
 ---
 
-# Random Forest Classifier
+## Random Forest Classifier
 
 ## What is Random Forest?
 
@@ -723,31 +723,3 @@ Random Forest reduces overfitting by averaging the predictions of many trees, re
 
 ---
 
-# Technologies Used
-
-- Python
-- Pandas
-- NumPy
-- Scikit-Learn
-- Matplotlib
-
----
-
-# Files
-
-- `play_tennis.csv` - Dataset used for training and evaluation
-- `naive_bayes.py` - Naive Bayes implementation and verification
-- `decision_tree.py` - Decision Tree implementation and verification
-- `random_forest.py` - Random Forest implementation and verification
-
----
-
-# Conclusion
-
-This repository demonstrates three important approaches to classification:
-
-- **Naive Bayes** - Probabilistic Learning
-- **Decision Tree** - Rule-Based Learning
-- **Random Forest** - Ensemble Learning
-
-Together, these algorithms show how machine learning models can make predictions using probabilities, decision rules, and collective voting strategies.
