@@ -722,4 +722,10 @@ Random Forest reduces overfitting by averaging the predictions of many trees, re
 - Handles complex relationships effectively
 
 ---
+# Synthetic Signal Generation for Power Quality Disturbance Analysis
+Python_code.py contains the code for synthetic waveform generation. Below are the plots-
+<img width="1280" height="800" alt="Screenshot 2026-06-10 at 5 13 53 PM" src="https://github.com/user-attachments/assets/ae8010dd-01d0-4f16-bea8-02c18fb8569d" />
 
+<img width="1280" height="800" alt="Screenshot 2026-06-10 at 5 14 00 PM" src="https://github.com/user-attachments/assets/1d0999e1-57b1-4a6b-82d9-5acc08ccb9d5" />
+
+<img width="1280" height="800" alt="Screenshot 2026-06-10 at 5 14 07 PM" src="https://github.com/user-attachments/assets/5c91ea84-f3f6-4448-81dc-822eb4f89271" />
