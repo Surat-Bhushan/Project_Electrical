@@ -729,3 +729,118 @@ Python_code.py contains the code for synthetic waveform generation. Below are th
 <img width="1280" height="800" alt="Screenshot 2026-06-10 at 5 14 00 PM" src="https://github.com/user-attachments/assets/1d0999e1-57b1-4a6b-82d9-5acc08ccb9d5" />
 
 <img width="1280" height="800" alt="Screenshot 2026-06-10 at 5 14 07 PM" src="https://github.com/user-attachments/assets/5c91ea84-f3f6-4448-81dc-822eb4f89271" />
+
+# Deep Learning Platform for Automatic Power Quality Disturbance (PQD) Classification
+
+This repository features a production-ready, scale-invariant 1D Convolutional Neural Network (CNN) optimized to extract complex time-frequency features from raw voltage waveforms and automatically classify them across 17 distinct operational categories.
+
+---
+
+## 📚 Core References & Datasets
+
+* **Dataset Source:** [SEED Power Quality Disturbance Dataset (Kaggle)](https://www.kaggle.com/datasets/sumairaziz/seed-power-quality-disturbance-dataset)
+* **Architecture Basis:** Model 1 from the [chachkes247/Power-Quality-Disturbances GitHub Repository](https://github.com/chachkes247/Power-Quality-Disturbances)
+* **Reference Paper:** *Deep Learning Algorithm for Automatic Classification of Power Quality Disturbances* by Fatema A. Albalooshi and M. R. Qader.
+
+---
+
+## 📈 Dataset Specifications
+
+The model is evaluated using a perfectly balanced variations pipeline:
+* **Total Scope:** 17,000 isolated signal waveforms (1,000 samples per class).
+* **Signal Geometry:** 100 time-steps per sample, configured as a 3D tensor: `(Samples, 100, 1)`.
+* **Target Classes (17):** Pure Sinusoidal, Sag, Swell, Interruption, Transient, Oscillatory Transient, Harmonics, Harmonics with Sag, Harmonics with Swell, Flicker, Flicker with Sag, Flicker with Swell, Sag with Oscillatory Transient, Swell with Oscillatory Transient, Sag with Harmonics, Swell with Harmonics, and Notch.
+
+---
+
+## ⏳ Chronological Development & Architectural Evolution
+
+The codebase progressed through three major iterations to maximize feature resolution, validation integrity, and generalization safety.
+
+### Step 1: The Initial Baseline (Lightweight Alternating CNN)
+* **Design:** Alternating layout structure (`Conv1D` ➔ `MaxPooling1D` ➔ `Conv1D`).
+* **Deficiencies:** Aggressive max-pooling strides cut down time-steps too quickly, erasing fine localized micro-anomalies (like sharp transient spikes or narrow notches). The terminal `Flatten()` layer tied the model to rigid input dimensions, causing compilation failures if the signal sequence window shifted.
+
+### Step 2: Transition to Paper Architecture (Albalooshi & Qader)
+* **Design:** Upgraded to a deep, VGG-style modular network using **Model 1** from the reference repository.
+* **Why Model 1 over Model 2?** Model 1 provides a clean, pure spatial feature extraction baseline. Debugging and establishing peak performance on spatial filters first is critical before adding recurrent structures.
+* **Advantage:** Replaced alternating blocks with **Stacked Convolutions** (`Conv1D` ➔ `Conv1D` ➔ `MaxPool1D`). Stacking consecutive convolutions expands the network's receptive field, allowing it to capture complex, non-linear waveshape interactions before data is lost to pooling.
+* ** Future Roadmap Note:** A **BiLSTM (Bidirectional Long Short-Term Memory)** layer will be integrated directly beneath the final CNN unit block in the next phase. The CNN will process local geometric shapes while the BiLSTM tracks sequence context forwards and backwards, sharpening accuracy on complex hybrid categories (e.g., *Flicker_with_Sag*).
+
+### Step 3: Overhauling the Repository Code (Final Production Script)
+While the paper's architecture was powerful, the original repo implementation contained engineering flaws (naive index-slicing data splits, lack of training termination controls, and hardcoded `.mat` inputs). The original code was overhauled to create the final production-ready script through the following changes:
+
+1.  **SEED Dataset Compatibility & CSV Ingestion:** Rewrote the data layer to dynamically parse 17 individual unheaded `.csv` signal sheets via `pd.read_csv(file_name, header=None)`. Expanded array stacking and channel configurations to scale from the original 16 target classes to 17.
+2.  **Upgrading to a 3-Way Stratified Split:** The original repository used a basic, non-shuffled index slice to split data into Training and Validation sets, using the validation set for both training feedback and final score reports. The updated pipeline implements a rigorous double-stacked `train_test_split`:
+    * **Train (70% - 11,900 samples):** Calculates loss gradients and updates weights.
+    * **Validation (15% - 2,550 samples):** Evaluates mid-training optimization and guides callbacks.
+    * **Test (15% - 2,550 samples):** Kept completely isolated in a separate vault. Evaluated exactly once after training ends to generate true performance metrics.
+    * *Stratification ensures a uniform class distribution (700 / 150 / 150 samples per class) across all three splits.*
+3.  **Coordinated Training Optimization Hooks:** The original repo relied on a fixed 43-epoch limit. The final script pairs two distinct training mechanics:
+    * **Adaptive Learning Rate (The Steering Wheel):** Custom step-decay schedule starting at `alpha = 0.01` and cutting the rate in half every 10 epochs for tight convergence. This was present in the original repository code.
+    * **Early Stopping (The Brakes):** Monitors validation loss with a roof of 100 epochs, `patience=10`, and `restore_best_weights=True`. If validation improvements stall, it cuts the loop and automatically rolls back model weights to the exact epoch that achieved peak performance.
+4.  **Advanced Metrics Reports:** Integrated complete tracking systems post-training, outputting a precise text-based `classification_report` and a visual `seaborn` heatmapped confusion matrix on the unseen test dataset.
+
+---
+
+## 🛠️ Key Architectural Nuances
+
+* **Scale Invariance via Global Max Pooling:** The legacy `Flatten()` layer was replaced with `GlobalMaxPooling1D()`. Instead of blindly smashing sequence indices together, global pooling scans each feature channel and extracts only its single highest activation value. This decouples the network from fixed input dimensions, allowing it to process 100-sample sequences or wider 640-sample sequences without dimensional errors.
+* **Stride Invariance in Pooling:** Intermediate max-pooling layers use a custom configuration (`pool_size=3, strides=1`). This allows the filters to smooth local wave noise while keeping the spatial timeline resolution completely intact until the global pooling layer at the very end.
+
+---
+
+## 📊 Evolutionary Feature Comparison Matrix
+
+| Design Vector | 1. Original Baseline | 2. Reference Repository Code | 3. Final Production Script |
+| :--- | :--- | :--- | :--- |
+| **Architectural Style** | Traditional / Lightweight | Deep Modular VGG-like | Deep Modular VGG-like |
+| **Convolution Pattern**| Alternating (`Conv`➔`Pool`) | Stacked (`Conv`➔`Conv`➔`Pool`) | Stacked (`Conv`➔`Conv`➔`Pool`) |
+| **Temporal Resolution**| Aggressive downsampling | Preserved resolution (`strides=1`) | Preserved resolution (`strides=1`) |
+| **Input Flexibiliy** | Rigid (Hardcoded sequence size)| Scale-Invariant (`GlobalMaxPool`) | Scale-Invariant (`GlobalMaxPool`) |
+| **Data Split Type** | 2-Way Random Split | Naive Fixed Index Slicing | **3-Way Stratified Split** |
+| **Final Evaluation** | Shared Validation Split | Shared Validation Split | **Isolated Vault Test Set** |
+| **Optimization Hook** | Static Learning Rate (Adam) | Custom Step-Decay Scheduler (Nadam)| **Step-Decay + Early Stopping + Weight Rollback** |
+| **Target Scale** | Customized 17 Classes | Original 16 MATLAB Classes | **Customized 17 CSV Classes (SEED)** |
+
+
+## 📊 Evaluation Metrics (Pure CNN Baseline)
+
+Calculated entirely on the isolated, unseen **Test Set Vault** at peak performance weights:
+
+* **True Model Test Accuracy:** 95.45%
+* **Early Stopping Trigger:** Terminated at Epoch 20 (Restored to Epoch 10 weights)
+* **Best Validation Loss:** 0.1582
+
+### Unbiased Test Classification Report
+
+```text
+                                precision    recall  f1-score   support
+
+               Pure_Sinusoidal       0.99      1.00      0.99       150
+                           Sag       0.97      0.99      0.98       150
+                         Swell       0.97      0.99      0.98       150
+                  Interruption       0.99      1.00      1.00       150
+                     Transient       0.77      1.00      0.87       150
+         Oscillatory_Transient       0.95      0.93      0.94       150
+                     Harmonics       0.99      1.00      1.00       150
+            Harmonics_with_Sag       0.98      0.99      0.98       150
+          Harmonics_with_Swell       1.00      0.97      0.98       150
+                       Flicker       0.99      0.85      0.92       150
+              Flicker_with_Sag       0.94      0.92      0.93       150
+            Flicker_with_Swell       1.00      0.86      0.92       150
+Sag_with_Oscillatory_Transient       0.99      0.91      0.94       150
+Swell_with_Oscillatory_Transient     1.00      0.90      0.95       150
+            Sag_with_Harmonics       0.98      0.95      0.97       150
+          Swell_with_Harmonics       0.83      0.99      0.90       150
+                         Notch       0.99      0.98      0.98       150
+
+                      accuracy                           0.95      2550
+                     macro avg       0.96      0.95      0.96      2550
+                  weighted avg       0.96      0.95      0.96      2550
+
+
+<img width="800" height="500" alt="Figure_1" src="https://github.com/user-attachments/assets/39742cb7-2336-4999-84bd-33951c49acb8" />
+<img width="1264" height="639" alt="Figure_3" src="https://github.com/user-attachments/assets/e766e65e-fe0a-4ddf-9811-51699b2b71aa" />
+<img width="600" height="300" alt="Figure_2" src="https://github.com/user-attachments/assets/666caecc-0edd-4141-ba59-8317b4fe9f8e" />
+
