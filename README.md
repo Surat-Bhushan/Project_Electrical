@@ -839,9 +839,8 @@ Swell_with_Oscillatory_Transient     1.00      0.90      0.95       150
                      macro avg       0.96      0.95      0.96      2550
                   weighted avg       0.96      0.95      0.96      2550
 
-<img width="800" height="500" alt="Figure_1" src="https://github.com/user-attachments/assets/5d4563bf-c2ea-42f9-ac3f-c30272fa2d69" />
+<img width="799" height="498" alt="Screenshot 2026-06-17 at 2 34 12 PM" src="https://github.com/user-attachments/assets/7d85782f-1b7b-4ebf-8b3c-9d1f266a3640" />
 
-<img width="1264" height="639" alt="Figure_3" src="https://github.com/user-attachments/assets/60f9ed7a-a6ff-493f-84dc-ae2c2d345cb9" />
+<img width="1236" height="628" alt="Screenshot 2026-06-17 at 2 34 33 PM" src="https://github.com/user-attachments/assets/f064ac8b-a518-45ad-883b-9f82e27c103e" />
 
-<img width="600" height="300" alt="Figure_2" src="https://github.com/user-attachments/assets/c0a800ab-c8fd-4ee1-9c00-f872e01075de" />
-
+<img width="602" height="299" alt="Screenshot 2026-06-17 at 2 34 41 PM" src="https://github.com/user-attachments/assets/77176322-e405-4c99-b526-4ae9c77b8c08" />
