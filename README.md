@@ -1,3 +1,50 @@
+# 📑 Table of Contents
+
+* [1. Univariate Linear Regression using Gradient Descent](#1-univariate-linear-regression-using-gradient-descent)
+  * [Objective](#objective)
+  * [Dataset](#dataset)
+  * [Linear Regression Model](#linear-regression-model)
+  * [Loss Function](#loss-function)
+  * [Gradient Descent](#gradient-descent)
+  * [Training Procedure](#training-procedure)
+  * [Visualization](#visualization)
+  * [Prediction](#prediction)
+  * [Verification using Scikit-Learn](#verification-using-scikit-learn)
+  * [Experimental Observations and Parameter Tuning](#experimental-observations-and-parameter-tuning)
+  * [Final Model Comparison](#final-model-comparison)
+* [2. Multivariate Linear Regression on California Housing Dataset](#2-multivariate-linear-regression-on-california-housing-dataset)
+  * [Objective](#objective-1)
+  * [Dataset Description](#dataset-description)
+  * [Model Summary](#model-summary)
+  * [Learned Parameters](#learned-parameters)
+  * [Regression Results](#regression-results)
+  * [Classification Results](#classification-results)
+  * [Predictions](#predictions)
+  * [Conclusion](#conclusion)
+* [3. Logistic Regression (Titanic Survival Prediction)](#3-logistic-regression)
+  * [Task Overview](#task-overview)
+  * [Concept](#concept)
+  * [Results](#results)
+  * [Visualizations](#visualizations)
+  * [Predictions for New Data](#predictions-for-new-data)
+  * [Observations](#observations)
+  * [Conclusion](#conclusion-1)
+* [4. Machine Learning Classification Algorithms](#4-machine-learning-classification-algorithms)
+  * [Naive Bayes Classifier](#naive-bayes-classifier)
+  * [Decision Tree Classifier](#decision-tree-classifier)
+  * [Random Forest Classifier](#random-forest-classifier)
+* [5. Synthetic Signal Generation for Power Quality Disturbance Analysis](#5-synthetic-signal-generation-for-power-quality-disturbance-analysis)
+* [6. Deep Learning Platform for Automatic Power Quality Disturbance (PQD) Classification](#6-deep-learning-platform-for-automatic-power-quality-disturbance-pqd-classification)
+  * [Core References & Datasets](#-core-references--datasets)
+  * [Dataset Specifications](#-dataset-specifications)
+  * [Chronological Development & Architectural Evolution](#-chronological-development--architectural-evolution)
+  * [Key Architectural Nuances](#%EF%B8%8F-key-architectural-nuances)
+  * [Evolutionary Feature Comparison Matrix](#-evolutionary-feature-comparison-matrix)
+  * [Evaluation Metrics (Pure CNN Baseline)](#-evaluation-metrics-pure-cnn-baseline)
+
+---
+
+
 # Univariate Linear Regression using Gradient Descent
 
 ## Objective
@@ -839,8 +886,5 @@ Swell_with_Oscillatory_Transient     1.00      0.90      0.95       150
                      macro avg       0.96      0.95      0.96      2550
                   weighted avg       0.96      0.95      0.96      2550
 
-<img width="799" height="498" alt="Screenshot 2026-06-17 at 2 34 12 PM" src="https://github.com/user-attachments/assets/7d85782f-1b7b-4ebf-8b3c-9d1f266a3640" />
 
-<img width="1236" height="628" alt="Screenshot 2026-06-17 at 2 34 33 PM" src="https://github.com/user-attachments/assets/f064ac8b-a518-45ad-883b-9f82e27c103e" />
 
-<img width="602" height="299" alt="Screenshot 2026-06-17 at 2 34 41 PM" src="https://github.com/user-attachments/assets/77176322-e405-4c99-b526-4ae9c77b8c08" />
