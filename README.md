@@ -778,7 +778,7 @@ Python_code.py contains the code for synthetic waveform generation. Below are th
 
 <img width="1280" height="800" alt="Screenshot 2026-06-10 at 5 14 07 PM" src="https://github.com/user-attachments/assets/5c91ea84-f3f6-4448-81dc-822eb4f89271" />
 
-# Deep Learning Platform for Automatic Power Quality Disturbance (PQD) Classification
+# CNN Platform for Automatic Power Quality Disturbance (PQD) Classification
 
 This repository features a production-ready, scale-invariant 1D Convolutional Neural Network (CNN) optimized to extract complex time-frequency features from raw voltage waveforms and automatically classify them across 17 distinct operational categories.
 
