@@ -60,11 +60,11 @@
     - [Model Structure](#model-structure-4)
     - [Key Characteristics](#key-characteristics-3)
     - [Performance](#performance-4)
+  - [Summary of the Five Models](#summary-of-the-five-models)
+  - [Increasing Model Complexity](#increasing-model-complexity)
   - [Performance Summary](#performance-summary)
   - [Key Observations](#key-observations)
   - [Model Comparison Table](#model-comparison-table)
-  - [Summary of the Five Models](#summary-of-the-five-models)
-  - [Increasing Model Complexity](#increasing-model-complexity)
 - [Author](#author)
 # Univariate Linear Regression using Gradient Descent
 
@@ -941,6 +941,44 @@ A Transformer-inspired architecture using positional embeddings and multi-head a
 
 ---
 
+## Summary of the Five Models
+
+| Model | Best At | Main Idea |
+|--------|----------|-----------|
+| **Model 1 – 1D CNN** | Learning local waveform patterns | Uses convolutional filters to automatically extract features from raw PQD signals. |
+| **Model 2 – DWT + Random Forest** | Time-frequency analysis | Converts signals into wavelet features and classifies them using an ensemble of 200 decision trees. |
+| **Model 3 – Parallel CNN + BiLSTM** | Combining spatial and temporal information | CNN learns local features while BiLSTM learns temporal dependencies simultaneously. |
+| **Model 4 – CNN + Self-Attention** | Highlighting important signal regions | Uses attention to assign higher importance to informative parts of the waveform before classification. |
+| **Model 5 – Transformer** | Global sequence modeling | Uses multi-head self-attention to learn relationships between all time steps in the signal simultaneously. |
+
+---
+
+### Increasing Model Complexity
+
+```text
+DWT + Random Forest
+        │
+        ▼
+1D CNN
+        │
+        ▼
+CNN + Self-Attention
+        │
+        ▼
+CNN + BiLSTM
+        │
+        ▼
+Transformer
+```
+
+- **Model 1** learns local spatial features.
+- **Model 2** relies on handcrafted wavelet features instead of learned features.
+- **Model 3** adds temporal sequence learning using BiLSTMs.
+- **Model 4** adds attention to focus on important waveform regions.
+- **Model 5** replaces convolution/LSTM-based sequence learning with global multi-head self-attention, allowing every time step to interact with every other time step.
+
+---
+
 # Performance Summary
 
 | Model | Test Accuracy |
@@ -996,42 +1034,6 @@ A Transformer-inspired architecture using positional embeddings and multi-head a
 | **Limitation** | Cannot model long-range dependencies well | Feature engineering required; cannot learn features automatically | Higher computational complexity | Attention increases computational cost | Highest computational complexity and training time |
 
 ---
-
-## Summary of the Five Models
-
-| Model | Best At | Main Idea |
-|--------|----------|-----------|
-| **Model 1 – 1D CNN** | Learning local waveform patterns | Uses convolutional filters to automatically extract features from raw PQD signals. |
-| **Model 2 – DWT + Random Forest** | Time-frequency analysis | Converts signals into wavelet features and classifies them using an ensemble of 200 decision trees. |
-| **Model 3 – Parallel CNN + BiLSTM** | Combining spatial and temporal information | CNN learns local features while BiLSTM learns temporal dependencies simultaneously. |
-| **Model 4 – CNN + Self-Attention** | Highlighting important signal regions | Uses attention to assign higher importance to informative parts of the waveform before classification. |
-| **Model 5 – Transformer** | Global sequence modeling | Uses multi-head self-attention to learn relationships between all time steps in the signal simultaneously. |
-
----
-
-### Increasing Model Complexity
-
-```text
-DWT + Random Forest
-        │
-        ▼
-1D CNN
-        │
-        ▼
-CNN + Self-Attention
-        │
-        ▼
-CNN + BiLSTM
-        │
-        ▼
-Transformer
-```
-
-- **Model 1** learns local spatial features.
-- **Model 2** relies on handcrafted wavelet features instead of learned features.
-- **Model 3** adds temporal sequence learning using BiLSTMs.
-- **Model 4** adds attention to focus on important waveform regions.
-- **Model 5** replaces convolution/LSTM-based sequence learning with global multi-head self-attention, allowing every time step to interact with every other time step.
 
 # Author
 ## Surat Bhushan (2026)
